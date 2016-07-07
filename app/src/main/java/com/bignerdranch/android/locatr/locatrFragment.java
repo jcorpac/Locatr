@@ -1,5 +1,6 @@
 package com.bignerdranch.android.locatr;
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -33,6 +34,7 @@ public class LocatrFragment extends Fragment {
 
     private ImageView mImageView;
     private GoogleApiClient mClient;
+    private ProgressDialog progress;
 
     public static LocatrFragment newInstance() {
         return new LocatrFragment();
@@ -89,6 +91,11 @@ public class LocatrFragment extends Fragment {
     }
 
     private void findImage() {
+        progress = new ProgressDialog(getActivity());
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setTitle("Locating Image");
+        progress.show();
+
         LocationRequest request = LocationRequest.create();
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         request.setNumUpdates(1);       // Update Once
@@ -125,8 +132,10 @@ public class LocatrFragment extends Fragment {
         private GalleryItem mGalleryItem;
         private Bitmap mBitmap;
 
+
         @Override
         protected Void doInBackground(Location... locations) {
+
             FlickrFetchr fetchr = new FlickrFetchr();
             List<GalleryItem> items = fetchr.searchPhotos(locations[0]);
 
@@ -149,6 +158,7 @@ public class LocatrFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             mImageView.setImageBitmap(mBitmap);
+            progress.hide();
         }
     }
 }
