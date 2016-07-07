@@ -10,6 +10,8 @@ public class GalleryItem {
     private String mId;
     private String mUrl;
     private String mOwner;
+    private Double mLat;
+    private Double mLon;
 
     @Override
     public String toString() {
@@ -47,6 +49,14 @@ public class GalleryItem {
     public void setOwner(String owner) {
         mOwner = owner;
     }
+
+    public Double getLat() { return mLat; }
+
+    public void setLat(Double lat) { mLat = lat; }
+
+    public Double getLon() { return mLon; }
+
+    public void setLon(Double lon) { mLon = lon; }
 
     public Uri getPhotoPageUri() {
         return Uri.parse("http://www.flickr.com/photos/")
